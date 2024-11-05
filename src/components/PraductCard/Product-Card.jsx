@@ -4,6 +4,7 @@ import {
   useDeleteMutation,
   useEditMutation,
 } from "../../redux/service/user-service";
+import { Link } from "react-router-dom";
 export const ProductCard = ({ title, description, id }) => {
   const [handDelet] = useDeleteMutation();
   const [handEdit] = useEditMutation();
@@ -36,31 +37,43 @@ export const ProductCard = ({ title, description, id }) => {
         <Typography color="white" variant="h5">
           {description}
         </Typography>
-      </Stack>
-      <Stack mx="auto" direction="row" mb="20px" spacing={2}>
-        <Button
-          onClick={() => handleEditClick(id)}
-          sx={{
-            bgcolor: "green",
-            color: "white",
-            borderColor: "green",
-            "&:hover": {
-              bgcolor: "darkgreen",
-              borderColor: "darkgreen",
-            },
-          }}
-          variant="outlined"
-        >
-          Edit
-        </Button>
 
-        <Button
-          onClick={() => handleDeleteClick(id)}
-          sx={{ bgcolor: "red", "&:hover": { bgcolor: "darkred" } }}
-          variant="contained"
-        >
-          Delete
-        </Button>
+        <Stack mx="auto" direction="row" mb="20px" spacing={2}>
+          <Button
+            onClick={() => handleEditClick(id)}
+            sx={{
+              bgcolor: "green",
+              color: "white",
+              borderColor: "green",
+              "&:hover": {
+                bgcolor: "darkgreen",
+                borderColor: "darkgreen",
+              },
+            }}
+            variant="outlined"
+          >
+            Edit
+          </Button>
+
+          <Button
+            onClick={() => handleDeleteClick(id)}
+            sx={{ bgcolor: "red", "&:hover": { bgcolor: "darkred" } }}
+            variant="contained"
+          >
+            Delete
+          </Button>
+          <Link to={`/user-detail/${id}`}>
+            <Button
+              sx={{
+                backgroundColor: "primary.main",
+                color: "white",
+                padding: "8px 16px",
+              }}
+            >
+              Show
+            </Button>
+          </Link>
+        </Stack>
       </Stack>
     </Stack>
   );
