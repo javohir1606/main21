@@ -1,13 +1,30 @@
 import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
-
+import {
+  useDeleteMutation,
+  useEditMutation,
+} from "../../redux/service/user-service";
 export const ProductCard = ({ title, description, id }) => {
-  const handleEditClick = (id) => {
-    console.log("Edit tugmasi bosildi!");
+  const [handDelet] = useDeleteMutation();
+  const [handEdit] = useEditMutation();
+
+  const handleEditClick = (id, title, description) => {
+    const TitleEdit = prompt("title");
+    const DesEdit = prompt("des");
+    if (TitleEdit && DesEdit) {
+      handEdit({ id, title: TitleEdit, description: DesEdit })
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+          toast.success("Successfully Edited");
+        });
+    }
   };
 
   const handleDeleteClick = (id) => {
-    console.log("Delete tugmasi bosildi!");
+    handDelet(id)
+      .unwrap()
+      .then((res) => console.log(res));
   };
 
   return (
@@ -21,24 +38,24 @@ export const ProductCard = ({ title, description, id }) => {
         </Typography>
       </Stack>
       <Stack mx="auto" direction="row" mb="20px" spacing={2}>
-      <Button
-      onClick={handleEditClick}
-      sx={{
-        bgcolor: "green",
-        color: "white",
-        borderColor: "green",
-        "&:hover": {
-          bgcolor: "darkgreen",
-          borderColor: "darkgreen",
-        },
-      }}
-      variant="outlined"
-    >
-      Edit
-    </Button>
+        <Button
+          onClick={() => handleEditClick(id)}
+          sx={{
+            bgcolor: "green",
+            color: "white",
+            borderColor: "green",
+            "&:hover": {
+              bgcolor: "darkgreen",
+              borderColor: "darkgreen",
+            },
+          }}
+          variant="outlined"
+        >
+          Edit
+        </Button>
 
         <Button
-        onClick={handleDeleteClick}
+          onClick={() => handleDeleteClick(id)}
           sx={{ bgcolor: "red", "&:hover": { bgcolor: "darkred" } }}
           variant="contained"
         >

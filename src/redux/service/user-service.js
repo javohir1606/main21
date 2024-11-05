@@ -33,22 +33,27 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["javohir"],
     }),
-    DeleteData: build.mutation({
+    Delete: build.mutation({
       query: (id) => ({
-        url: "/todos",
+        url: `/todos/${id}`,
         method: "DELETE",
         body: id,
       }),
       invalidatesTags: ["javohir"],
     }),
-    EditData: build.mutation({
-      query: (id) => ({
-        url: "/todos",
-        method: "EDIT",
-        body: id,
+    Edit: build.mutation({
+      query: ({ id, title, description }) => ({
+        url: `/todos/${id}`,
+        method: "PUT",
+        body: { title, description },
       }),
       invalidatesTags: ["javohir"],
     }),
   }),
 });
-export const { useCreateApiMutation, useGetUsersQuery } = userApi;
+export const {
+  useCreateApiMutation,
+  useGetUsersQuery,
+  useDeleteMutation,
+  useEditMutation,
+} = userApi;
